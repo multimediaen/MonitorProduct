@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "635571683069",
+    "project_id": "monitorproduct-2e83e",
+    "storage_bucket": "monitorproduct-2e83e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635571683069:android:30e6e5f3b1473d6e4f0894",
+        "android_client_info": {
+          "package_name": "com.tkmetalsheet.monitorproduct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635571683069-j0uknjvq67u0ttuk61vd16i51uu8dfjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMEaUqHX-XI81jJoV4wRzymffSjQv48uQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635571683069-j0uknjvq67u0ttuk61vd16i51uu8dfjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
