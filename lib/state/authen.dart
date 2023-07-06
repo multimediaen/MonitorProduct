@@ -1,14 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:monitorproduct/model/user_model.dart';
 import 'package:monitorproduct/state/create_new_account.dart';
+import 'package:monitorproduct/utility/app_snackbar.dart';
 import 'package:monitorproduct/widget/widget_button.dart';
 import 'package:monitorproduct/widget/widget_form.dart';
 import 'package:monitorproduct/widget/widget_image.dart';
 import 'package:monitorproduct/widget/widget_text.dart';
 import 'package:monitorproduct/widget/widget_text_button.dart';
 
-class Authen extends StatelessWidget {
+class Authen extends StatefulWidget {
   const Authen({super.key});
+
+  @override
+  State<Authen> createState() => _AuthenState();
+}
+
+class _AuthenState extends State<Authen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +31,52 @@ class Authen extends StatelessWidget {
           children: [
             displayHead(context),
             makeCenter(
-                widget: const WidgetForm(
+                widget: WidgetForm(
               hint: 'Email :',
-              suffixWidget: Icon(Icons.contact_mail),
+              suffixWidget: const Icon(Icons.contact_mail),
+              textEditingController: emailController,
             )),
             makeCenter(
-                widget: const WidgetForm(
+                widget: WidgetForm(
               hint: 'Password :',
-              suffixWidget: Icon(Icons.lock_outline),
+              suffixWidget: const Icon(Icons.lock_outline),
+              textEditingController: passwordController,
             )),
             makeCenter(
                 widget: WidgetButton(
               label: 'login',
-              pressFunc: () {},
+              pressFunc: () async {
+                if ((emailController.text.isEmpty) ||
+                    (passwordController.text.isEmpty)) {
+                  AppSnackbar(
+                          title: 'Have Space ?',
+                          message: 'Please Fill Every Blank')
+                      .errorSnackbar();
+                } else {
+                  await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text)
+                      .then((value) async {
+                    await FirebaseFirestore.instance
+                        .collection('user')
+                        .doc(value.user!.uid)
+                        .get()
+                        .then((value) {
+                      UserModel userModel = UserModel.fromMap(value.data()!);
+
+                      Get.offAllNamed('/${userModel.typeuser}');
+                      AppSnackbar(
+                              title: 'Welcome ${userModel.name}',
+                              message: 'Have a Good Day')
+                          .normalSnackbar();
+                    });
+                  }).catchError((onError) {
+                    AppSnackbar(title: onError.code, message: onError.message)
+                        .errorSnackbar();
+                  });
+                }
+              },
             )),
             makeCenter(
                 widget: WidgetTextButton(
