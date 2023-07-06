@@ -7,24 +7,32 @@ import 'package:monitorproduct/widget/widget_text.dart';
 import 'package:monitorproduct/widget/widget_text_button.dart';
 
 class AppDialog {
-
-
   final BuildContext context;
   AppDialog({
     required this.context,
   });
-  
+
   void normalDialog({
     required String title,
     Widget? firstAction,
+    bool? showCancel,
   }) {
+    bool cancel = showCancel ?? true;
     Get.dialog(
       AlertDialog(
         icon: WidgetImage(
           size: 100,
         ),
         title: WidgetText(data: title),
-        actions: [ firstAction ?? const SizedBox()  ,WidgetTextButton(label: 'Cancel', pressFunc: () => Get.back(),)],
+        actions: [
+          firstAction ?? const SizedBox(),
+          cancel
+              ? WidgetTextButton(
+                  label: 'Cancel',
+                  pressFunc: () => Get.back(),
+                )
+              : const SizedBox(),
+        ],
       ),
     );
   }
