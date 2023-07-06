@@ -19,12 +19,12 @@ class Authen extends StatelessWidget {
           children: [
             displayHead(context),
             makeCenter(
-                widget: WidgetForm(
+                widget: const WidgetForm(
               hint: 'Email :',
               suffixWidget: Icon(Icons.contact_mail),
             )),
             makeCenter(
-                widget: WidgetForm(
+                widget: const WidgetForm(
               hint: 'Password :',
               suffixWidget: Icon(Icons.lock_outline),
             )),
@@ -37,12 +37,7 @@ class Authen extends StatelessWidget {
                 widget: WidgetTextButton(
               label: 'Create New Account',
               pressFunc: () {
-
                 Get.to(const CreateNewAccount());
-
-
-
-
               },
             ))
           ],
